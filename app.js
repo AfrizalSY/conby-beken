@@ -10,7 +10,7 @@ const PORT = 5000;
 const app = express();
 
 require('dotenv').config();
-require('./config/passport')(passport);
+require('./app/config/passport')(passport);
 
 // Connect to MongoDB
 mongoose
@@ -23,6 +23,7 @@ mongoose
 
 //EJS
 app.use(expressLayouts);
+app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 
 // Bodyparser
@@ -52,8 +53,8 @@ app.use((req, res, next) => {
 
 
 //Routes
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+app.use('/', require('./app/routes/index'));
+app.use('/users', require('./app/routes/users'));
 
 
 
