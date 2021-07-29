@@ -22,6 +22,15 @@ const ConsultantSchema = new mongoose.Schema(
         },
         bankAccountNumber: {
             type: String
+        },
+        price: {
+            type: Number
+        },
+        photo: {
+            type: String
+        },
+        rating: {
+            type: Number
         }
     },
     { timestamps: true }
