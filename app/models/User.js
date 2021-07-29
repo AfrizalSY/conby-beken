@@ -16,6 +16,20 @@ const UserSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    baby: {
+        name: {
+            type: String
+        },
+        dateOfBirth: {
+            type: String
+        },
+        weight: {
+            type: Number
+        },
+        height: {
+            type: Number
+        }
     }
 });
 

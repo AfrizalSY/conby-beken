@@ -26,4 +26,7 @@ router.post('/login', controller.login);
 //Logout Handle
 router.get('/logout', controller.logout);
 
+// update baby
+router.put('/update-baby/:id', controller.updateBaby);
+
 module.exports = router;

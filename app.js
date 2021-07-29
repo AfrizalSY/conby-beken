@@ -16,7 +16,7 @@ require('./app/config/passport')(passport);
 mongoose
   .connect(
     process.env.MONGODB_URI,
-    { useNewUrlParser: true ,useUnifiedTopology: true}
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => console.log('MongoDB Connected!'))
   .catch(err => console.log(err));
@@ -27,7 +27,8 @@ app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 
 // Bodyparser
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Express Session 
 app.use(session({

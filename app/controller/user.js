@@ -79,3 +79,18 @@ exports.logout = (req, res) => {
     req.flash('success_msg','You are logout');
     res.redirect('/users/login');
 };
+
+exports.updateBaby = (req, res) => {
+    const dataBaby = { baby: req.body };
+
+    User.findByIdAndUpdate(req.params.id, dataBaby).then(() => {
+        return res.status(200).json({
+            message: 'success! you have updated baby data'
+        });
+    }).catch((err) => {
+        console.log('>> error: ', err);
+        return res.status(500).json({
+            error: err.message
+        });
+    });
+};
