@@ -3,7 +3,7 @@ const expressLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require('passport');
+// const passport = require('passport');
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +27,7 @@ app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 
 // Bodyparser
+// Bodyparser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -38,8 +39,8 @@ app.use(session({
 }))
 
 // Passport
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Flash
 app.use(flash());
