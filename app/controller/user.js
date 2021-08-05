@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.js');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 exports.register = (req, res) => {
     const { email, password, password2 } = req.body;
@@ -96,15 +97,15 @@ exports.login = (req, res) => {
         }
 
         // create token
-        // var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
-        //     expiresIn: 1800 // 30 menit
-        // });
+        var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
+            expiresIn: 1800 // 30 minutes
+        });
 
         res.status(200).json({
             message: 'success! you have logged in',
             data: {
                 id: user._id,
-                // accessToken: token
+                accessToken: token
             }
         });
     }).catch((err) => console.log(err));
