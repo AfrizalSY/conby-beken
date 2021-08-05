@@ -1,63 +1,68 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/User.js');
+const User = require('../models/user.js');
 const passport = require('passport');
 
 exports.register = (req, res) => {
-    const { name, email, password, password2 } = req.body;
+    const { email, password, password2 } = req.body;
     
     let errors = [];
 
     // Checking
-    if ( !name || !email || !password || !password2 ) {
-        errors.push( {msg: 'Please fill all the fields!'} )
+    if ( !email || !password || !password2 ) {
+        errors.push({ msg: 'Please fill all the fields!' });
     }
     if (password != password2) {
-        errors.push( {msg: 'Password not match!'} )
+        errors.push({ msg: 'Password not match!' });
     }
     if (password.length < 6) {
-        errors.push( {msg: 'Password should be at least 6 characters!'} )
+        errors.push({ msg: 'Password should be at least 6 characters!' });
     }
     if (errors.length > 0) {
-        res.render('register',{
-            errors,
-            name,
-            email,
-            password,
-            password2
+        // res.render('register',{
+        //     errors,
+        //     email,
+        //     password,
+        //     password2
+        // });
+        return res.status(400).json({
+            errors: errors
         });
     } else {
         // Validation Passed
-        User.findOne( {email: email } )
+        User.findOne({ email: email })
             .then(user => {
                 if(user) {
-                    errors.push({msg: 'Email is already used!'});
-                    res.render('register',{
-                        errors,
-                        name,
-                        email,
-                        password,
-                        password2
+                    errors.push( {msg: 'Email is already used!'} );
+                    // res.render('register',{
+                    //     errors,
+                    //     email,
+                    //     password,
+                    //     password2
+                    // });
+                    res.status(400).json({
+                        errors: errors
                     });
                 } else {
                     const newUser = new User({
-                        name,
                         email,
                         password
                     });
 
                     // Hashing pw
-
-                    bcrypt.genSalt(10, (err,salt) => 
-                        bcrypt.hash(newUser.password, salt, (err,hash) => {
+                    bcrypt.genSalt(10, (err, salt) => 
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if(err) throw err;
 
                             // Password set as Hash
                             newUser.password = hash;
                             
                             newUser.save()
-                                .then(user => {
+                                .then(() => {
                                     req.flash('success_msg','Registered! Now you can login.');
-                                    res.redirect('/users/login');
+                                    // res.redirect('/users/login');
+                                    res.status(201).json({
+                                        message: 'success! you have registered'
+                                    })
                                 })
                                 .catch(err => console.log(err));
                         }))
@@ -66,12 +71,43 @@ exports.register = (req, res) => {
     }
 };
 
-exports.login = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/users/login',
-        failireFlash: true
-    })(req, res, next);
+// exports.login = (req, res, next) => {
+//     passport.authenticate('local', {
+//         successRedirect: '/dashboard',
+//         failureRedirect: '/users/login',
+//         failireFlash: true
+//     })(req, res, next);
+// };
+
+exports.login = (req, res) => {
+    User.findOne({ email: req.body.email }).then((user) => {
+        if (!user) {
+            res.status(401).json({
+                message: `email or password doesn't match!`
+            });
+        }
+
+        // validate password
+        var password = bcrypt.compareSync(req.body.password, user.password);
+        if (!password) {
+            res.status(401).json({
+                message: `email or password doesn't match!`
+            });
+        }
+
+        // create token
+        // var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
+        //     expiresIn: 1800 // 30 menit
+        // });
+
+        res.status(200).json({
+            message: 'success! you have logged in',
+            data: {
+                id: user._id,
+                // accessToken: token
+            }
+        });
+    }).catch((err) => console.log(err));
 };
 
 exports.logout = (req, res) => {
@@ -80,16 +116,26 @@ exports.logout = (req, res) => {
     res.redirect('/users/login');
 };
 
-exports.updateBaby = (req, res) => {
-    const dataBaby = { baby: req.body };
+exports.updateProfile = (req, res) => {
+    const dataUser = {
+        name: req.body.userName,
+        photo: req.body.photo, // multer --> req.file.path
+        baby: {
+            name: req.body.babyName,
+            dateOfBirth: req.body.dateOfBirth,
+            gender: req.body.gender,
+            height: req.body.height,
+            weight: req.body.weight
+        }
+    };
 
-    User.findByIdAndUpdate(req.params.id, dataBaby).then(() => {
-        return res.status(200).json({
-            message: 'success! you have updated baby data'
+    User.findByIdAndUpdate(req.params.id, dataUser).then(() => {
+        res.status(200).json({
+            message: 'success! your profile has been updated'
         });
     }).catch((err) => {
         console.log('>> error: ', err);
-        return res.status(500).json({
+        res.status(500).json({
             error: err.message
         });
     });
