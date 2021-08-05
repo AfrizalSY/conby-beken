@@ -118,9 +118,15 @@ exports.logout = (req, res) => {
 };
 
 exports.updateProfile = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            message: 'photo must be attached!'
+        });
+    }
+
     const dataUser = {
         name: req.body.userName,
-        photo: req.body.photo, // multer --> req.file.path
+        photo: req.file.path,
         baby: {
             name: req.body.babyName,
             dateOfBirth: req.body.dateOfBirth,
@@ -134,10 +140,5 @@ exports.updateProfile = (req, res) => {
         res.status(200).json({
             message: 'success! your profile has been updated'
         });
-    }).catch((err) => {
-        console.log('>> error: ', err);
-        res.status(500).json({
-            error: err.message
-        });
-    });
+    }).catch((err) => console.log(err));
 };
