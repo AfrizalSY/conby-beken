@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 require('dotenv').config();
-require('./app/config/passport')(passport);
+// require('./app/config/passport')(passport);
 
 // Connect to MongoDB
 mongoose
