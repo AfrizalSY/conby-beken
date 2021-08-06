@@ -4,16 +4,21 @@ const router = express.Router();
 const controller = require('../controller/public');
 
 // router.get('/', (req,res) => 
-//     // res.render('welcome')
+//     res.render(
+//         'CONBY Base API')
 // );
+
+router.get('/', (req,res) => {
+    res.send('Conby Base API');
+});
 
 // router.get('/', controller.findTop4Consultants);
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'success!'
-    });
-});
+// router.get('/', (req, res) => {
+//     res.json({
+//         message: 'success!'
+//     });
+// });
 
 //Dashboard Page
 // router.get('/dashboard',ensureAuthenticated, (req,res) => 
