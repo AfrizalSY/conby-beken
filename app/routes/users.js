@@ -4,19 +4,19 @@ const controller = require('../controller/user');
 const uploadPhoto = require('../middlewares/photo');
 
 //Login Page
-router.get('/login', (req, res) => 
-    res.render('login')
-);
+// router.get('/login', (req, res) => 
+//     res.render('login')
+// );
 
 //Register Page
-router.get('/register', (req, res) => 
-    res.render('register')
-);
+// router.get('/register', (req, res) => 
+//     res.render('register')
+// );
 
 //Forgot passowrd
-router.get('/forgotpw', (req, res) => 
-    res.render('forgotpw')
-);
+// router.get('/forgotpw', (req, res) => 
+//     res.render('forgotpw')
+// );
 
 //Regis handle
 router.post('/register', controller.register);
