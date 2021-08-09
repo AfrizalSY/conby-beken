@@ -83,7 +83,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
         if (!user) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: `email or password doesn't match!`
             });
         }
@@ -91,7 +91,7 @@ exports.login = (req, res) => {
         // validate password
         var password = bcrypt.compareSync(req.body.password, user.password);
         if (!password) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: `email or password doesn't match!`
             });
         }

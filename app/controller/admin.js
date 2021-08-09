@@ -21,7 +21,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     Admin.findOne({ name: req.body.name }).then((admin) => {
         if (!admin) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: `email or password doesn't match!`
             });
         }
@@ -29,7 +29,7 @@ exports.login = (req, res) => {
         // validate password
         var passwrod = bcrypt.compareSync(req.body.password, admin.password);
         if (!passwrod) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: `email or password doesn't match!`
             });
         }
