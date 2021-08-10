@@ -9,6 +9,8 @@ const controller = require('../controller/public');
 
 router.get('/', controller.findTop4Consultants);
 
+router.get('/consultants', controller.findAllConsultants);
+
 //Dashboard Page
 // router.get('/dashboard',ensureAuthenticated, (req,res) => 
 //     res.render('dashboard', {
