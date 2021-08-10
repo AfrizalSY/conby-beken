@@ -31,3 +31,27 @@ exports.login = (req, res) => {
         });
     }).catch((err) => console.log(err));
 };
+
+exports.updateProfile = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            message: 'photo must be attached!'
+        });
+    }
+
+    const dataConsultant = {
+        name: req.body.name,
+        dateOfBirth: req.body.dateOfBirth,
+        password: req.body.newPassword,
+        subSpecialist: req.body.subSpecialist,
+        bankAccountNumber: req.body.bankAccountNumber,
+        price: req.body.price,
+        photo: req.file.path
+    }
+
+    Consultant.findByIdAndUpdate(req.params.id, dataConsultant).then(() => {
+        res.status(200).json({
+            message: 'success! your profile has been updated'
+        });
+    }).catch((err) => console.log(err));
+};
