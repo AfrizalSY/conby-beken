@@ -7,13 +7,7 @@ const controller = require('../controller/public');
 //     // res.render('welcome')
 // );
 
-// router.get('/', controller.findTop4Consultants);
-
-router.get('/', (req, res) => {
-    res.json({
-        message: 'success!'
-    });
-});
+router.get('/', controller.findTop4Consultants);
 
 //Dashboard Page
 // router.get('/dashboard',ensureAuthenticated, (req,res) => 
