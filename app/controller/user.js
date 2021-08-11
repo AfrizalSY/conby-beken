@@ -26,6 +26,7 @@ exports.register = (req, res) => {
         //     password2
         // });
         return res.status(400).json({
+            status: 400,
             errors: errors
         });
     } else {
@@ -41,6 +42,7 @@ exports.register = (req, res) => {
                     //     password2
                     // });
                     res.status(400).json({
+                        status: 400,
                         errors: errors
                     });
                 } else {
@@ -62,8 +64,9 @@ exports.register = (req, res) => {
                                     req.flash('success_msg','Registered! Now you can login.');
                                     // res.redirect('/users/login');
                                     res.status(201).json({
+                                        status: 201,
                                         message: 'success! you have registered'
-                                    })
+                                    });
                                 })
                                 .catch(err => console.log(err));
                         }))
@@ -83,7 +86,8 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
         if (!user) {
-            res.status(401).json({
+            return res.status(401).json({
+                status: 401,
                 message: `email or password doesn't match!`
             });
         }
@@ -91,7 +95,8 @@ exports.login = (req, res) => {
         // validate password
         var password = bcrypt.compareSync(req.body.password, user.password);
         if (!password) {
-            res.status(401).json({
+            return res.status(401).json({
+                status: 401,
                 message: `email or password doesn't match!`
             });
         }
@@ -102,9 +107,9 @@ exports.login = (req, res) => {
         });
 
         res.status(200).json({
+            status: 200,
             message: 'success! you have logged in',
             data: {
-                id: user._id,
                 accessToken: token
             }
         });
@@ -120,6 +125,7 @@ exports.logout = (req, res) => {
 exports.updateProfile = (req, res) => {
     if (!req.file) {
         return res.status(400).json({
+            status: 400,
             message: 'photo must be attached!'
         });
     }
@@ -138,6 +144,7 @@ exports.updateProfile = (req, res) => {
 
     User.findByIdAndUpdate(req.params.id, dataUser).then(() => {
         res.status(200).json({
+            status: 200,
             message: 'success! your profile has been updated'
         });
     }).catch((err) => console.log(err));

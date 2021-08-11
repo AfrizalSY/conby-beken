@@ -8,17 +8,9 @@ const controller = require('../controller/public');
 //         'CONBY Base API')
 // );
 
-router.get('/', (req,res) => {
-    res.send('Conby Base API');
-});
+router.get('/', controller.findTop4Consultants);
 
-// router.get('/', controller.findTop4Consultants);
-
-// router.get('/', (req, res) => {
-//     res.json({
-//         message: 'success!'
-//     });
-// });
+router.get('/consultants', controller.findAllConsultants);
 
 //Dashboard Page
 // router.get('/dashboard',ensureAuthenticated, (req,res) => 
