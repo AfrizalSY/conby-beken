@@ -13,6 +13,7 @@ exports.register = (req, res) => {
     // save admin
     admin.save().then(() => {
         res.status(201).json({
+            status: 201,
             message: 'success! admin has been created'
         });
     }).catch((err) => console.log(err));
@@ -22,6 +23,7 @@ exports.login = (req, res) => {
     Admin.findOne({ name: req.body.name }).then((admin) => {
         if (!admin) {
             return res.status(401).json({
+                status: 401,
                 message: `email or password doesn't match!`
             });
         }
@@ -30,6 +32,7 @@ exports.login = (req, res) => {
         var passwrod = bcrypt.compareSync(req.body.password, admin.password);
         if (!passwrod) {
             return res.status(401).json({
+                status: 401,
                 message: `email or password doesn't match!`
             });
         }
@@ -40,6 +43,7 @@ exports.login = (req, res) => {
         });
 
         res.status(200).json({
+            status: 200,
             message: 'success! you have logged in',
             data: {
                 accessToken: token
@@ -58,6 +62,7 @@ exports.createConsultantAccount = (req, res) => {
     // save consultant
     consultant.save().then(() => {
         res.status(201).json({
+            status: 201,
             message: 'success! consultant account has been created'
         });
     }).catch((err) => console.log(err));

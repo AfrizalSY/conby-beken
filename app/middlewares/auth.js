@@ -6,6 +6,7 @@ exports.verifyToken = (req, res, next) => {
 
     if (!token) {
         return res.status(403).json({
+            status: 403,
             message: 'access denied! no token available'
         });
     }
@@ -14,10 +15,12 @@ exports.verifyToken = (req, res, next) => {
         if (err) {
             if (err.message == 'invalid signature') {
                 return res.status(401).json({
+                    status: 401,
                     message: 'invalid tokens!'
                 });
             } else if (err.message == 'jwt expired') {
                 return res.status(401).json({
+                    status: 401,
                     message: 'token period has expired! please login again'
                 });
             }
@@ -31,6 +34,7 @@ exports.isAdmin = (req, res, next) => {
     Admin.findOne({ _id: req.id }).then((admin) => {
         if (!admin) {
             return res.status(403).json({
+                status: 403,
                 message: 'you cannot access this page!'
             });
         }
