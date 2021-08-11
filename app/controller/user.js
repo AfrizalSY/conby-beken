@@ -110,7 +110,6 @@ exports.login = (req, res) => {
             status: 200,
             message: 'success! you have logged in',
             data: {
-                id: user._id,
                 accessToken: token
             }
         });
