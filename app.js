@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 // const passport = require('passport');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,7 +27,6 @@ app.use(expressLayouts);
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 
-// Bodyparser
 // Bodyparser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -53,6 +53,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// cors
+var allowlist = ['http://localhost:3000'];
+var corsOptionsDelegate = (req, callback) => {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true };
+  } else {
+    corsOptions = { origin: false };
+  }
+  callback(null, corsOptions);
+};
+
+app.use(cors(corsOptionsDelegate));
 
 //Routes
 app.use('/', require('./app/routes/index'));
