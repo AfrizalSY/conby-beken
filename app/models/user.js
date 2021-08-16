@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
     {
@@ -32,7 +32,13 @@ const UserSchema = new mongoose.Schema(
             weight: {
                 type: Number
             }
-        }
+        },
+        orders: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'order'
+            }
+        ]
     }, { timestamps: true }
 );
 
