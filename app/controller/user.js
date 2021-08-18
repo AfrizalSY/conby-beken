@@ -174,13 +174,3 @@ exports.findOneUser = (req, res) => {
         });
     }).catch((err) => console.log(err));
 };
-
-exports.findAllUsers = (req, res) => {
-    User.find({}).then((users) => {
-        res.status(200).json({
-            status: 200,
-            message: 'success!',
-            data: users
-        });
-    }).catch((err) => console.log(err));
-};

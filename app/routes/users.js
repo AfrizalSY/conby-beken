@@ -49,7 +49,4 @@ router.get(
     controller.findOneUser
 );
 
-// get all users
-router.get('/all-users', controller.findAllUsers);
-
 module.exports = router;
