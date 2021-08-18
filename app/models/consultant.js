@@ -35,7 +35,13 @@ const ConsultantSchema = new mongoose.Schema(
         numberOfTransactions: {
             type: Number,
             default: 0
-        }
+        },
+        orders: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'order'
+            }
+        ]
     },
     { timestamps: true }
 );

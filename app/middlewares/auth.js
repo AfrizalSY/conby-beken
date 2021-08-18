@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/admin');
+const User = require('../models/user');
 
 exports.verifyToken = (req, res, next) => {
     let token = req.headers['x-access-token'];
@@ -40,4 +41,26 @@ exports.isAdmin = (req, res, next) => {
         }
         next();
     }).catch((err) => console.log(err));
+};
+
+exports.isUser = (req, res, next) => {
+    User.findOne({ _id: req.id }).then((user) => {
+        if (!user) {
+            return res.status(403).json({
+                status: 403,
+                message: 'you cannot access this page!'
+            });
+        }
+        next();
+    }).catch((err) => console.log(err));
+};
+
+exports.compareId = (req, res, next) => {
+    if (req.id !== req.params.id) {
+        return res.status(403).json({
+            status: 403,
+            message: 'you cannot access this page!'
+        });
+    }
+    next();
 };
