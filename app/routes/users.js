@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const controller = require('../controller/user');
 const uploadPhoto = require('../middlewares/photo');
+const auth = require('../middlewares/auth');
 
 //Login Page
 // router.get('/login', (req, res) => 
@@ -28,6 +29,14 @@ router.post('/login', controller.login);
 router.get('/logout', controller.logout);
 
 // update profile
-router.put('/update-profile/:id', uploadPhoto.single('photo'), controller.updateProfile);
+router.put(
+    '/update-profile/:id',
+    [
+        auth.verifyToken,
+        auth.compareId
+    ],
+    uploadPhoto.single('photo'),
+    controller.updateProfile
+);
 
 module.exports = router;

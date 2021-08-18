@@ -54,3 +54,13 @@ exports.isUser = (req, res, next) => {
         next();
     }).catch((err) => console.log(err));
 };
+
+exports.compareId = (req, res, next) => {
+    if (req.id !== req.params.id) {
+        return res.status(403).json({
+            status: 403,
+            message: 'you cannot access this page!'
+        });
+    }
+    next();
+};
