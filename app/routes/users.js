@@ -39,4 +39,17 @@ router.put(
     controller.updateProfile
 );
 
+// get one user
+router.get(
+    '/profile/:id',
+    [
+        auth.verifyToken,
+        auth.compareId
+    ],
+    controller.findOneUser
+);
+
+// get all users
+router.get('/all-users', controller.findAllUsers);
+
 module.exports = router;
