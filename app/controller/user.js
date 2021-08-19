@@ -120,7 +120,7 @@ exports.login = (req, res) => {
             message: 'success! you have logged in',
             data: {
                 user: {
-                    id: user._id
+                    _id: user._id
                 },
                 accessToken: token
             }

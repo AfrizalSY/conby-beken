@@ -29,6 +29,9 @@ exports.login = (req, res) => {
             status: 200,
             message: 'success! you have logged in',
             data: {
+                consultant: {
+                    _id: consultant._id
+                },
                 accessToken: token
             }
         });
@@ -51,12 +54,13 @@ exports.updateProfile = (req, res) => {
         bankAccountNumber: req.body.bankAccountNumber,
         price: req.body.price,
         photo: req.file.path
-    }
+    };
 
     Consultant.findByIdAndUpdate(req.params.id, dataConsultant).then(() => {
         res.status(200).json({
             status: 200,
-            message: 'success! your profile has been updated'
+            message: 'success! your profile has been updated',
+            data: dataConsultant
         });
     }).catch((err) => console.log(err));
 };
