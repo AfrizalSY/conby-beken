@@ -60,10 +60,11 @@ exports.createConsultantAccount = (req, res) => {
     });
 
     // save consultant
-    consultant.save().then(() => {
+    consultant.save().then((savedConsultant) => {
         res.status(201).json({
             status: 201,
-            message: 'success! consultant account has been created'
+            message: 'success! consultant account has been created',
+            data: savedConsultant
         });
     }).catch((err) => console.log(err));
 };

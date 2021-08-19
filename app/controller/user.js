@@ -72,9 +72,7 @@ exports.register = (req, res) => {
                                         status: 201,
                                         message: 'success! you have registered',
                                         data: {
-                                            user: {
-                                                id: savedUser._id,
-                                            },
+                                            user: savedUser,
                                             accessToken: token
                                         }
                                     });
