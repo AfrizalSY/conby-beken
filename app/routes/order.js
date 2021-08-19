@@ -14,8 +14,7 @@ router.post(
 router.get(
     '/checkout/:id', // id order
     [
-        auth.verifyToken,
-        auth.isUser
+        auth.verifyToken
     ],
     controller.checkout
 );

@@ -22,12 +22,13 @@ exports.createOrder = (req, res) => {
             totalPrice: consultantPrice + uniqueCode
         });
 
-        order.save().then((order) => {
-            User.findByIdAndUpdate(req.id, { $push: { orders: order._id } }).then(() => {
-                Consultant.findByIdAndUpdate(req.params.id, { $push: { orders: order._id } }).then(() => {
+        order.save().then((savedOrder) => {
+            User.findByIdAndUpdate(req.id, { $push: { orders: savedOrder._id } }).then(() => {
+                Consultant.findByIdAndUpdate(req.params.id, { $push: { orders: savedOrder._id } }).then(() => {
                     res.status(201).json({
                         status: 201,
-                        message: 'success! created order'
+                        message: 'success! created order',
+                        data: savedOrder
                     });
                 }).catch((err) => console.log(err));
             }).catch((err) => console.log(err));
