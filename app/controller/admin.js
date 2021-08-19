@@ -39,7 +39,7 @@ exports.login = (req, res) => {
 
         // create token
         var token = jwt.sign({ _id: admin._id }, process.env.SECRET, {
-            expiresIn: 1800 // 30 minutes
+            expiresIn: 86400 // 1 day
         });
 
         res.status(200).json({
