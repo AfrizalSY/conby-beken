@@ -49,7 +49,7 @@ exports.updateProfile = (req, res) => {
     const dataConsultant = {
         name: req.body.name,
         dateOfBirth: req.body.dateOfBirth,
-        password: req.body.newPassword,
+        password: bcrypt.hashSync(req.body.newPassword, 10),
         subSpecialist: req.body.subSpecialist,
         bankAccountNumber: req.body.bankAccountNumber,
         price: req.body.price,
