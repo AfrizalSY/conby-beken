@@ -31,11 +31,11 @@ router.get('/logout', controller.logout);
 // update profile
 router.put(
     '/update-profile/:id',
+    uploadPhoto.single('photo'),
     [
         auth.verifyToken,
         auth.compareId
     ],
-    uploadPhoto.single('photo'),
     controller.updateProfile
 );
 

@@ -7,10 +7,10 @@ router.post('/login', controller.login);
 
 router.put(
     '/update-profile/:id',
+    uploadPhoto.single('photo'),
     [
         auth.verifyToken,
         auth.compareId,
-        uploadPhoto.single('photo'),
     ],
     controller.updateProfile
 );
