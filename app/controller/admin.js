@@ -39,7 +39,7 @@ exports.login = (req, res) => {
 
         // create token
         var token = jwt.sign({ _id: admin._id }, process.env.SECRET, {
-            expiresIn: 1800 // 30 minutes
+            expiresIn: 86400 // 1 day
         });
 
         res.status(200).json({
@@ -60,10 +60,11 @@ exports.createConsultantAccount = (req, res) => {
     });
 
     // save consultant
-    consultant.save().then(() => {
+    consultant.save().then((savedConsultant) => {
         res.status(201).json({
             status: 201,
-            message: 'success! consultant account has been created'
+            message: 'success! consultant account has been created',
+            data: savedConsultant
         });
     }).catch((err) => console.log(err));
 };

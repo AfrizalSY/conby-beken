@@ -60,12 +60,21 @@ exports.register = (req, res) => {
                             newUser.password = hash;
                             
                             newUser.save()
-                                .then(() => {
+                                .then((savedUser) => {
+                                    // create token
+                                    var token = jwt.sign({ _id: savedUser._id }, process.env.SECRET, {
+                                        expiresIn: 86400 // 1 day
+                                    });
+
                                     req.flash('success_msg','Registered! Now you can login.');
                                     // res.redirect('/users/login');
                                     res.status(201).json({
                                         status: 201,
-                                        message: 'success! you have registered'
+                                        message: 'success! you have registered',
+                                        data: {
+                                            user: savedUser,
+                                            accessToken: token
+                                        }
                                     });
                                 })
                                 .catch(err => console.log(err));
@@ -103,13 +112,16 @@ exports.login = (req, res) => {
 
         // create token
         var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
-            expiresIn: 1800 // 30 minutes
+            expiresIn: 86400 // 1 day
         });
 
         res.status(200).json({
             status: 200,
             message: 'success! you have logged in',
             data: {
+                user: {
+                    _id: user._id
+                },
                 accessToken: token
             }
         });
@@ -145,7 +157,18 @@ exports.updateProfile = (req, res) => {
     User.findByIdAndUpdate(req.params.id, dataUser).then(() => {
         res.status(200).json({
             status: 200,
-            message: 'success! your profile has been updated'
+            message: 'success! your profile has been updated',
+            data: dataUser
+        });
+    }).catch((err) => console.log(err));
+};
+
+exports.findOneUser = (req, res) => {
+    User.findOne({ _id: req.params.id }).then((user) => {
+        res.status(200).json({
+            status: 200,
+            message: 'success!',
+            data: user
         });
     }).catch((err) => console.log(err));
 };

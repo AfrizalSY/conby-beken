@@ -12,6 +12,8 @@ router.get('/', controller.findTop4Consultants);
 
 router.get('/consultants', controller.findAllConsultants);
 
+router.get('/:id', controller.findOneConsultant);
+
 //Dashboard Page
 // router.get('/dashboard',ensureAuthenticated, (req,res) => 
 //     res.render('dashboard', {
