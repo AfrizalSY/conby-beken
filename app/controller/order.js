@@ -37,18 +37,20 @@ exports.createOrder = (req, res) => {
 };
 
 exports.checkout = (req, res) => {
-    Order.findOne({ _id: req.params.id }).then((order) => {
-        if (order.idUser != req.id) {
-            return res.status(403).json({
-                status: 403,
-                message: 'you cannot access this page!'
-            });
-        }
+    Order.findOne({ _id: req.params.id })
+        .populate('consultant', 'rating photo name subSpecialist')
+        .then((order) => {
+            if (order.user != req.id) {
+                return res.status(403).json({
+                    status: 403,
+                    message: 'you cannot access this page!'
+                });
+            }
 
-        res.status(200).json({
-            status: 200,
-            message: 'success!',
-            data: order
-        });
-    }).catch((err) => console.log(err));
+            res.status(200).json({
+                status: 200,
+                message: 'success!',
+                data: order
+            });
+        }).catch((err) => console.log(err));
 };
