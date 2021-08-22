@@ -57,6 +57,7 @@ app.use((req, res, next) => {
 var allowlist = ['http://localhost:3000', 'https://conby-backend.herokuapp.com'];
 var corsOptionsDelegate = (req, callback) => {
   var corsOptions;
+  res.setHeader("Access-Control-Allow-Origin", "*");
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = { origin: true };
   } else {
