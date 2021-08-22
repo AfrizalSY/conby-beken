@@ -15,4 +15,13 @@ router.put(
     controller.updateProfile
 );
 
+router.get(
+    '/profile/:id',
+    [
+        auth.verifyToken,
+        auth.compareId
+    ],
+    controller.findOneConsultant
+);
+
 module.exports = router;

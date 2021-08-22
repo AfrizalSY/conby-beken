@@ -64,3 +64,13 @@ exports.updateProfile = (req, res) => {
         });
     }).catch((err) => console.log(err));
 };
+
+exports.findOneConsultant = (req, res) => {
+    Consultant.findOne({ _id: req.params.id }).then((consultant) => {
+        res.status(200).json({
+            status: 200,
+            message: 'success!',
+            data: consultant
+        });
+    }).catch((err) => console.log(err));
+};

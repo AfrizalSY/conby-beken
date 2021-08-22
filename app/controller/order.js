@@ -13,8 +13,8 @@ exports.createOrder = (req, res) => {
 
         // create order
         const order = new Order({
-            idUser: req.id,
-            idConsultant: req.params.id,
+            user: req.id,
+            consultant: req.params.id,
             consultationDate: req.body.consultationDate,
             consultationTime: req.body.consultationTime,
             price: consultantPrice,
@@ -37,24 +37,20 @@ exports.createOrder = (req, res) => {
 };
 
 exports.checkout = (req, res) => {
-    Order.findOne({ _id: req.params.id }).then((order) => {
-        if (order.idUser != req.id) {
-            return res.status(403).json({
-                status: 403,
-                message: 'you cannot access this page!'
-            });
-        }
-
-        res.status(200).json({
-            status: 200,
-            message: 'success!',
-            data: {
-                consultationDate: order.consultationDate,
-                consultationTime: order.consultationTime,
-                price: order.price,
-                uniqueCode: order.uniqueCode,
-                totalPrice: order.totalPrice
+    Order.findOne({ _id: req.params.id })
+        .populate('consultant', 'rating photo name subSpecialist')
+        .then((order) => {
+            if (order.user != req.id) {
+                return res.status(403).json({
+                    status: 403,
+                    message: 'you cannot access this page!'
+                });
             }
-        });
-    }).catch((err) => console.log(err));
+
+            res.status(200).json({
+                status: 200,
+                message: 'success!',
+                data: order
+            });
+        }).catch((err) => console.log(err));
 };
