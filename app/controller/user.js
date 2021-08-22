@@ -172,3 +172,23 @@ exports.findOneUser = (req, res) => {
         });
     }).catch((err) => console.log(err));
 };
+
+exports.findOrderUser = (req, res) => {
+    User.findOne({ _id: req.id })
+        .select({ orders: 1 })
+        .populate({
+            path: 'orders',
+            select: 'consultant status consultationDate consultationTime linkMeet',
+            populate: {
+                path: 'consultant',
+                select: 'photo name subSpecialist'
+            }
+        })
+        .then((user) => {
+            res.status(200).json({
+                status: 200,
+                message: 'success!',
+                data: user
+            });
+        }).catch((err) => console.log(err));
+};
