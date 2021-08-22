@@ -33,8 +33,12 @@ const OrderSchema = new mongoose.Schema(
             type: Number
         },
         status: {
-            type: Boolean,
-            default: false
+            type: Number,
+            default: 0
+            // 0: belum dibayar, 1: sudah dibayar, -1: dibatalkan
+        },
+        linkMeet: {
+            type: String
         }
     }, { timestamps: true }
 );
