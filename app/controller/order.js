@@ -13,8 +13,8 @@ exports.createOrder = (req, res) => {
 
         // create order
         const order = new Order({
-            idUser: req.id,
-            idConsultant: req.params.id,
+            user: req.id,
+            consultant: req.params.id,
             consultationDate: req.body.consultationDate,
             consultationTime: req.body.consultationTime,
             price: consultantPrice,
@@ -24,7 +24,7 @@ exports.createOrder = (req, res) => {
 
         order.save().then((savedOrder) => {
             User.findByIdAndUpdate(req.id, { $push: { orders: savedOrder._id } }).then(() => {
-                Consultant.findByIdAndUpdate(req.params.id, { $push: { orders: savedOrder._id } }).then(() => {
+                Consultant.findByIdAndUpdate(req.params.id, { b$push: { orders: savedOrder._id } }).then(() => {
                     res.status(201).json({
                         status: 201,
                         message: 'success! created order',
