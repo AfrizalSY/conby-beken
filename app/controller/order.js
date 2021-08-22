@@ -48,13 +48,7 @@ exports.checkout = (req, res) => {
         res.status(200).json({
             status: 200,
             message: 'success!',
-            data: {
-                consultationDate: order.consultationDate,
-                consultationTime: order.consultationTime,
-                price: order.price,
-                uniqueCode: order.uniqueCode,
-                totalPrice: order.totalPrice
-            }
+            data: order
         });
     }).catch((err) => console.log(err));
 };
