@@ -54,10 +54,11 @@ app.use((req, res, next) => {
 });
 
 // cors
-// var allowlist = ['http://localhost:3000', 'https://conby-backend.herokuapp.com'];
+app.use(cors());
+
+// var allowlist = ['http://localhost:3000'];
 // var corsOptionsDelegate = (req, callback) => {
 //   var corsOptions;
-//   // res.setHeader("Access-Control-Allow-Origin", "*");
 //   if (allowlist.indexOf(req.header('Origin')) !== -1) {
 //     corsOptions = { origin: true };
 //   } else {
@@ -67,16 +68,6 @@ app.use((req, res, next) => {
 // };
 
 // app.use(cors(corsOptionsDelegate));
-// app.user(cors());
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 //Routes
 app.use('/', require('./app/routes/index'));

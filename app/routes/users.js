@@ -49,4 +49,13 @@ router.get(
     controller.findOneUser
 );
 
+router.get(
+    '/consultation-schedule',
+    [
+        auth.verifyToken,
+        auth.isUser
+    ],
+    controller.findOrderUser
+);
+
 module.exports = router;
