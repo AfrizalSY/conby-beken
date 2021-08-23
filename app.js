@@ -54,18 +54,20 @@ app.use((req, res, next) => {
 });
 
 // cors
-var allowlist = ['http://localhost:3000'];
-var corsOptionsDelegate = (req, callback) => {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true };
-  } else {
-    corsOptions = { origin: false };
-  }
-  callback(null, corsOptions);
-};
+app.use(cors());
 
-app.use(cors(corsOptionsDelegate));
+// var allowlist = ['http://localhost:3000'];
+// var corsOptionsDelegate = (req, callback) => {
+//   var corsOptions;
+//   if (allowlist.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true };
+//   } else {
+//     corsOptions = { origin: false };
+//   }
+//   callback(null, corsOptions);
+// };
+
+// app.use(cors(corsOptionsDelegate));
 
 //Routes
 app.use('/', require('./app/routes/index'));
