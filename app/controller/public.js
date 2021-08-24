@@ -29,7 +29,8 @@ exports.findAllConsultants = (req, res) => {
 
 exports.findOneConsultant = (req, res) => {
     Consultant.findOne({ _id: req.params.id })
-        .select({ rating: 1, photo: 1, name: 1, subSpecialist: 1, price: 1 })
+        .select({ rating: 1, photo: 1, name: 1, subSpecialist: 1, price: 1, reviews: 1 })
+        .populate('reviews.user', 'name photo')
         .then((consultant) => {
             res.status(200).json({
                 status: 200,

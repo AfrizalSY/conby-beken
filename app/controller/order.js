@@ -79,6 +79,7 @@ exports.rateConsultant = (req, res) => {
             }
             newRating += req.body.rating;
             newRating /= nRating + 1;
+            newRating.toFixed(1);
             Consultant.findByIdAndUpdate(order.consultant, { rating: newRating }).then(() => {
                 res.status(200).json({
                     status: 200,
