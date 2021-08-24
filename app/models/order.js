@@ -20,9 +20,6 @@ const OrderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        evidenceOfTransfer: {
-            type: String
-        },
         price: {
             type: Number
         },
