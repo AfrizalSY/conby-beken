@@ -6,7 +6,7 @@ const auth = require('../middlewares/auth');
 router.post('/login', controller.login);
 
 router.put(
-    '/update-profile/:id',
+    '/update-profile/:id', // id consultant
     uploadPhoto.single('photo'),
     [
         auth.verifyToken,
@@ -16,7 +16,7 @@ router.put(
 );
 
 router.get(
-    '/profile/:id',
+    '/profile/:id', // id consultant
     [
         auth.verifyToken,
         auth.compareId

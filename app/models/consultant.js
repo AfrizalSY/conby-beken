@@ -32,6 +32,24 @@ const ConsultantSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
+        reviews: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'user'
+                },
+                rating: {
+                    type: Number
+                },
+                description: {
+                    type: String
+                },
+                createdAt: {
+                    type: Date,
+                    default: new Date
+                }
+            }
+        ],
         orders: [
             {
                 type: mongoose.Schema.Types.ObjectId,

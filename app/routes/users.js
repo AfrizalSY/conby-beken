@@ -41,7 +41,7 @@ router.put(
 
 // get one user
 router.get(
-    '/profile/:id',
+    '/profile/:id', // id user
     [
         auth.verifyToken,
         auth.compareId
@@ -51,7 +51,7 @@ router.get(
 
 // get order history of one user
 router.get(
-    '/order-history/:id',
+    '/order-history/:id', // id user
     [
         auth.verifyToken,
         auth.compareId

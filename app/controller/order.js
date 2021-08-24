@@ -54,3 +54,38 @@ exports.checkout = (req, res) => {
             });
         }).catch((err) => console.log(err));
 };
+
+exports.rateConsultant = (req, res) => {
+    Order.findOne({ _id: req.params.id }).then((order) => {
+        if (order.user != req.id) {
+            return res.status(403).json({
+                status: 403,
+                message: 'you cannot access this page!'
+            });
+        }
+
+        const dataConsultant = {
+            user: req.id,
+            rating: req.body.rating,
+            description: req.body.description
+        };
+    
+        Consultant.findByIdAndUpdate(order.consultant, { $push: { reviews: dataConsultant } }).then((consultant) => {
+            // calculate consultant's rating
+            var newRating = 0;
+            var nRating = consultant.reviews.length;
+            for (let i = 0; i < nRating; i++) {
+                newRating += consultant.reviews[i].rating;
+            }
+            newRating += req.body.rating;
+            newRating /= nRating + 1;
+            Consultant.findByIdAndUpdate(order.consultant, { rating: newRating }).then(() => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'success!',
+                    data: dataConsultant
+                });
+            });
+        });
+    }).catch((err) => console.log(err));
+};

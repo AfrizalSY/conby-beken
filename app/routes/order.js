@@ -19,4 +19,12 @@ router.get(
     controller.checkout
 );
 
+router.put(
+    '/review/:id', // id order
+    [
+        auth.verifyToken
+    ],
+    controller.rateConsultant
+);
+
 module.exports = router;
