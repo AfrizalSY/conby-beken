@@ -49,11 +49,12 @@ router.get(
     controller.findOneUser
 );
 
+// get order history of one user
 router.get(
-    '/consultation-schedule',
+    '/order-history/:id',
     [
         auth.verifyToken,
-        auth.isUser
+        auth.compareId
     ],
     controller.findOrderUser
 );

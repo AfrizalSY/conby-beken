@@ -174,11 +174,11 @@ exports.findOneUser = (req, res) => {
 };
 
 exports.findOrderUser = (req, res) => {
-    User.findOne({ _id: req.id })
+    User.findOne({ _id: req.params.id })
         .select({ orders: 1 })
         .populate({
             path: 'orders',
-            select: 'consultant status consultationDate consultationTime linkMeet',
+            select: '-user ',
             populate: {
                 path: 'consultant',
                 select: 'photo name subSpecialist'
