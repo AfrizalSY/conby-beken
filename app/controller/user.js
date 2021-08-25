@@ -78,7 +78,7 @@ exports.register = (req, res) => {
 
                                 req.flash('success_msg','Registered! Now you can login and check the email for the Code Confirmation');
                                 // res.redirect('/users/login');
-                                // res.redirect('users/verify/{id}')
+                                // res.redirect('verify/'+ newUser._id)
                                 res.status(201).json({
                                     status: 201,
                                     message: 'success! you have registered',
@@ -107,20 +107,19 @@ exports.register = (req, res) => {
                                 }
                             });
                             
-                            const mailOptions = {
+                            const mailVerif = {
                                 from: process.env.EMAIL_CONBY,
                                 to: newUser.email,
                                 subject: 'Conby Account Created!',
-                                text: `Account created, this is the code verification`,
+                                text: `Thank you creating account in Conby!`,
                                 html: 
-                                `<h3>Here is your code</h3>
-                                <h6>{}</h6>
+                                `<h3>Here is your code verification: </h3>
+                                <h2>${newUser.codeVerif}</h2>
                                 `
-
                             };
-                            transporter.sendMail(mailOptions, (err, info) => {
+                            transporter.sendMail(mailVerif, (err, info) => {
                                 if (err) throw err;
-                                console.log('Email sent: ' + info.response + 'to ' + newUser.email);
+                                console.log('Email sent: ' + info.response + ' to ' + newUser.email);
                             });
 
                         }))
@@ -246,7 +245,7 @@ exports.verifyUser = (req,res) => {
         // console.log("Code : "+ code + "user.codeVerif"+ user.codeVerif);
 
         // checking input kode sama user.codeVerif sama ato tidak
-        if (user.codeVerif != code) {
+        if (user.codeVerif != code || code < 1000) {
             return res.status(401).json({
                 status: 401,
                 message: `code not match`
