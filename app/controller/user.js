@@ -84,8 +84,7 @@ exports.register = (req, res) => {
                                     message: 'success! you have registered',
                                     data: {
                                         user: {
-                                            order: newUser.order,
-                                            id: newUser._id,
+                                            _id: newUser._id,
                                             email: newUser.email,
                                             password: newUser.password,
                                             isVerif: newUser.isVerif,
