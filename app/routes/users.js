@@ -28,6 +28,12 @@ router.post('/login', controller.login);
 //Logout Handle
 router.get('/logout', controller.logout);
 
+// get one user
+router.post(
+    '/verify/:id',
+    controller.verifyUser
+);
+
 // update profile
 router.put(
     '/update-profile/:id',
@@ -38,6 +44,7 @@ router.put(
     ],
     controller.updateProfile
 );
+
 
 // get one user
 router.get(

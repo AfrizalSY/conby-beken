@@ -4,7 +4,8 @@ const router = express.Router();
 const controller = require('../controller/public');
 
 // router.get('/', (req,res) => 
-//     // res.render('welcome')
+//     res.render(
+//         'CONBY Base API')
 // );
 
 router.get('/', controller.findTop4Consultants);

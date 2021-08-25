@@ -16,6 +16,12 @@ const UserSchema = new mongoose.Schema(
         photo: {
             type: String
         },
+        codeVerif: {
+            type: Number
+        },
+        isVerif: {
+            type: Boolean
+        },
         baby: {
             name: {
                 type: String
