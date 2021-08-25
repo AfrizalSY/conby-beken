@@ -16,15 +16,27 @@ exports.findTop4Consultants = (req, res) => {
 };
 
 exports.findAllConsultants = (req, res) => {
-    Consultant.find({})
-        .select({ rating: 1, photo: 1, name: 1, subSpecialist: 1, price: 1 })
-        .then((consultants) => {
-            res.status(200).json({
-                status: 200,
-                message: 'success!',
-                data: consultants
-            });
-        }).catch((err) => console.log(err));
+    if (!req.query.name) {
+        Consultant.find({})
+            .select({ rating: 1, photo: 1, name: 1, subSpecialist: 1, price: 1 })
+            .then((consultants) => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'success!',
+                    data: consultants
+                });
+            }).catch((err) => console.log(err));
+    } else {
+        Consultant.find({ name: { $regex: req.query.name, $options: '$i' } })
+            .select({ rating: 1, photo: 1, name: 1, subSpecialist: 1, price: 1 })
+            .then((consultants) => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'success!',
+                    data: consultants
+                });
+            }).catch((err) => console.log(err));
+    }
 };
 
 exports.findOneConsultant = (req, res) => {
