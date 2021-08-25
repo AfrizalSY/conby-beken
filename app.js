@@ -69,6 +69,10 @@ app.use(cors());
 
 // app.use(cors(corsOptionsDelegate));
 
+// static folder
+const uploadsDir = require('path').join(__dirname, '/uploads');
+app.use(express.static(uploadsDir));
+
 //Routes
 app.use('/', require('./app/routes/index'));
 app.use('/users', require('./app/routes/users'));
