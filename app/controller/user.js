@@ -131,6 +131,13 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
+        if (!user.isVerif) {
+            return res.status(401).json({
+                status: 401,
+                message: 'you need to verify your account to login'
+            });
+        }
+        
         if (!user) {
             return res.status(401).json({
                 status: 401,
