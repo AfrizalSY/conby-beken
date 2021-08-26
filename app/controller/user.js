@@ -137,7 +137,7 @@ exports.login = (req, res) => {
                 message: 'you need to verify your account to login'
             });
         }
-        
+
         if (!user) {
             return res.status(401).json({
                 status: 401,
@@ -244,7 +244,7 @@ exports.findOrderUser = (req, res) => {
         }).catch((err) => console.log(err));
 };
 
-exports.verifyUser = (req,res) => {
+exports.verifyUser = (req, res) => {
     User.findOne({ _id: req.params.id }).then((user) => {
         
         code = req.body.kode;

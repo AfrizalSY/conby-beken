@@ -1,5 +1,6 @@
 const Consultant = require('../models/consultant');
 const Admin = require('../models/admin');
+const Order = require('../models/order');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -67,4 +68,30 @@ exports.createConsultantAccount = (req, res) => {
             data: savedConsultant
         });
     }).catch((err) => console.log(err));
+};
+
+exports.findOrder = (req, res) => {
+    if (!req.query.price) {
+        Order.find({})
+            .select({ user: 1, price: 1, uniqueCode: 1, totalPrice: 1, status: 1 })
+            .populate('user', 'name')
+            .then((orders) => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'success!',
+                    data: orders
+                });
+            }).catch((err) => console.log(err));
+    } else {
+        Order.find({ totalPrice: { $eq: req.query.price } })
+            .select({ user: 1, price: 1, uniqueCode: 1, totalPrice: 1, status: 1 })
+            .populate('user', 'name')
+            .then((orders) => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'success!',
+                    data: orders
+                });
+            }).catch((err) => console.log(err));
+    }
 };

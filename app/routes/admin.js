@@ -22,4 +22,13 @@ router.post(
     controller.createConsultantAccount
 );
 
+router.get(
+    '/orders',
+    [
+        auth.verifyToken,
+        auth.isAdmin
+    ],
+    controller.findOrder
+);
+
 module.exports = router;
