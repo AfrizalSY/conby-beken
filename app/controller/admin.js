@@ -95,3 +95,12 @@ exports.findOrder = (req, res) => {
             }).catch((err) => console.log(err));
     }
 };
+
+exports.changeOrderStatus = (req, res) => {
+    Order.findByIdAndUpdate(req.params.id, { status: 1 }).then(() => {
+        res.status(200).json({
+            status: 200,
+            message: 'success! order approved'
+        });
+    }).catch((err) => console.log(err));
+};

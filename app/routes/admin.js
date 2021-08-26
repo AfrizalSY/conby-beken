@@ -31,4 +31,13 @@ router.get(
     controller.findOrder
 );
 
+router.put(
+    '/order/approve/:id',
+    [
+        auth.verifyToken,
+        auth.isAdmin
+    ],
+    controller.changeOrderStatus
+);
+
 module.exports = router;
