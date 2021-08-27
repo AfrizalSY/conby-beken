@@ -72,9 +72,9 @@ exports.register = (req, res) => {
                             newUser.save()
                             .then((savedUser) => {
                                 // create token
-                                // var token = jwt.sign({ _id: savedUser._id }, process.env.SECRET, {
-                                //     expiresIn: 86400 // 1 day
-                                // });
+                                var token = jwt.sign({ _id: savedUser._id }, process.env.SECRET, {
+                                    expiresIn: 86400 // 1 day
+                                });
 
                                 req.flash('success_msg','Registered! Now you can login and check the email for the Code Confirmation');
                                 // res.redirect('/users/login');
@@ -90,8 +90,8 @@ exports.register = (req, res) => {
                                             isVerif: newUser.isVerif,
                                             createdAt: newUser.createdAt,
                                             updatedAt: newUser.updatedAt,
-                                        }
-                                        // accessToken: token
+                                        },
+                                        accessToken: token
                                     }
                                 });
                                 
@@ -131,12 +131,12 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
-        if (!user.isVerif) {
-            return res.status(401).json({
-                status: 401,
-                message: 'you need to verify your account to login'
-            });
-        }
+        // if (!user.isVerif) {
+        //     return res.status(401).json({
+        //         status: 401,
+        //         message: 'you need to verify your account to login'
+        //     });
+        // }
 
         if (!user) {
             return res.status(401).json({
@@ -154,12 +154,12 @@ exports.login = (req, res) => {
             });
         }
 
-        if (user.isVerif == false) {
-            return res.status(401).json({
-                status: 401,
-                message: `you're not verify,please verify your account first`
-            });
-        }
+        // if (user.isVerif == false) {
+        //     return res.status(401).json({
+        //         status: 401,
+        //         message: `you're not verify,please verify your account first`
+        //     });
+        // }
 
         // create token
         var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
