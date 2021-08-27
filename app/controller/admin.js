@@ -73,8 +73,8 @@ exports.createConsultantAccount = (req, res) => {
 exports.findOrder = (req, res) => {
     if (!req.query.price) {
         Order.find({})
-            .select({ user: 1, price: 1, uniqueCode: 1, totalPrice: 1, status: 1 })
-            .populate('user', 'name')
+            .select({ user: 1, totalPrice: 1, status: 1, consultationDate: 1, consultationTime: 1 })
+            .populate('user', 'name photo')
             .then((orders) => {
                 res.status(200).json({
                     status: 200,
@@ -84,8 +84,8 @@ exports.findOrder = (req, res) => {
             }).catch((err) => console.log(err));
     } else {
         Order.find({ totalPrice: { $eq: req.query.price } })
-            .select({ user: 1, price: 1, uniqueCode: 1, totalPrice: 1, status: 1 })
-            .populate('user', 'name')
+            .select({ user: 1, totalPrice: 1, status: 1 })
+            .populate('user', 'name photo')
             .then((orders) => {
                 res.status(200).json({
                     status: 200,
@@ -97,10 +97,16 @@ exports.findOrder = (req, res) => {
 };
 
 exports.changeOrderStatus = (req, res) => {
-    Order.findByIdAndUpdate(req.params.id, { status: 1 }).then(() => {
+    const dataOrder = {
+        status: 1,
+        linkMeet: req.body.linkMeet
+    };
+
+    Order.findByIdAndUpdate(req.params.id, dataOrder).then(() => {
         res.status(200).json({
             status: 200,
-            message: 'success! order approved'
+            message: 'success! order approved',
+            data: dataOrder
         });
     }).catch((err) => console.log(err));
 };

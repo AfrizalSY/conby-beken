@@ -74,3 +74,23 @@ exports.findOneConsultant = (req, res) => {
         });
     }).catch((err) => console.log(err));
 };
+
+exports.findConsultantOrder = (req, res) => {
+    Consultant.findOne({ _id: req.params.id })
+        .select({ orders: 1 })
+        .populate({
+            path: 'orders',
+            select: '-consultant ',
+            populate: {
+                path: 'user',
+                select: 'name photo baby'
+            }
+        })
+        .then((user) => {
+            res.status(200).json({
+                status: 200,
+                message: 'success!',
+                data: {user}
+            });
+        }).catch((err) => console.log(err));
+};
