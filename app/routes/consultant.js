@@ -24,4 +24,13 @@ router.get(
     controller.findOneConsultant
 );
 
+router.get(
+    '/order-history/:id',
+    [
+        auth.verifyToken,
+        auth.compareId
+    ],
+    controller.findConsultantOrder
+);
+
 module.exports = router;
