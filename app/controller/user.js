@@ -131,12 +131,12 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
-        // if (!user.isVerif) {
-        //     return res.status(401).json({
-        //         status: 401,
-        //         message: 'you need to verify your account to login'
-        //     });
-        // }
+        if (!user.isVerif) {
+            return res.status(401).json({
+                status: 401,
+                message: 'you need to verify your account to login'
+            });
+        }
 
         if (!user) {
             return res.status(401).json({
@@ -154,12 +154,12 @@ exports.login = (req, res) => {
             });
         }
 
-        // if (user.isVerif == false) {
-        //     return res.status(401).json({
-        //         status: 401,
-        //         message: `you're not verify,please verify your account first`
-        //     });
-        // }
+        if (!user.isVerif) {
+            return res.status(401).json({
+                status: 401,
+                message: `you're not verify,please verify your account first`
+            });
+        }
 
         // create token
         var token = jwt.sign({ _id: user._id }, process.env.SECRET, {
